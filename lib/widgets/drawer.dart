@@ -59,7 +59,15 @@ class MyDrawer extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
             textScaler: TextScaler.linear(1.1),
           ),
-        )
+        ),
+        ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushReplacementNamed("/login");
+                },
+                style: ElevatedButton.styleFrom(backgroundColor: context.theme.shadowColor),
+                child: "Sign Out".text.color(Colors.white).make())
+            .centered()
+            .p64()
       ]),
     );
   }

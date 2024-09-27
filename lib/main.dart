@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter_catalogue/core/store.dart';
 import 'package:flutter_catalogue/pages/cart_page.dart';
+import 'package:flutter_catalogue/pages/forget_password.dart';
 import 'package:flutter_catalogue/pages/login_page.dart';
 import 'package:flutter_catalogue/themes.dart';
 import 'package:flutter_catalogue/utils/routes.dart';
@@ -49,10 +50,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.loginRoute,
       routes: {
-        "/": (context) => const LoginPage(),
-        Routes.HomeRoute: (context) => const HomePage(),
-        Routes.loginRoute: (context) => const LoginPage(),
-        Routes.CartRoute: (context) => const CartPage(),
+        "/": (context) => LoginPage(),
+        Routes.HomeRoute: (context) => HomePage(),
+        Routes.loginRoute: (context) => LoginPage(),
+        Routes.CartRoute: (context) => CartPage(),
+        Routes.ForgotRoute: (context) => ForgetPage(),
       },
     );
   }

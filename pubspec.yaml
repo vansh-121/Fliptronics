@@ -38,6 +38,7 @@ dependencies:
   google_fonts: ^6.2.1
   google_sign_in: ^6.2.1
   http: ^1.2.2
+  sign_in_button: ^3.2.0
   url_strategy: ^0.3.0
   velocity_x: ^4.2.1
 

@@ -15,14 +15,9 @@ class OtpPage extends StatefulWidget {
 class _OtpPageState extends State<OtpPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController otpController = TextEditingController();
-  late String
-      verificationId; // This will hold the verificationId from the previous screen
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve verificationId from previous screen or process
-    verificationId = ModalRoute.of(context)!.settings.arguments as String;
-
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: AppBar(
@@ -56,18 +51,41 @@ class _OtpPageState extends State<OtpPage> {
                 const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () async {
-                    try {
-                      PhoneAuthCredential credential =
-                          await PhoneAuthProvider.credential(
-                              verificationId: widget.verificationid,
-                              smsCode: otpController.text.toString());
-                      FirebaseAuth.instance
-                          .signInWithCredential(credential)
-                          .then((value) {
-                        Navigator.of(context).pushReplacementNamed('home');
-                      });
-                    } catch (ex) {
-                      print(ex.toString()); // Log the error message
+                    
+                    if (_formKey.currentState!.validate()) {
+                      try {
+                        PhoneAuthCredential credential =
+                            await PhoneAuthProvider.credential(
+                                verificationId: widget.verificationid,
+                                smsCode: otpController.text.toString());
+                        FirebaseAuth.instance
+                            .signInWithCredential(credential)
+                            .then((value) {
+                          Navigator.of(context).pushReplacementNamed('home');
+                        });
+                      } catch (ex) {
+                        print(ex.toString()); // Log the error message
+                      }
+                      showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: context.theme.cardColor,
+                          title: const Text("Verified"),
+                          content: const Text("OTP Verified"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pushNamed(
+                                    '/home'); // Close the dialog
+                              },
+                              child: Text("Login"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                     }
                   },
                   style: ElevatedButton.styleFrom(

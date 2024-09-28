@@ -21,7 +21,7 @@ class _PhonePageState extends State<PhonePage> {
     return Scaffold(
       backgroundColor: context.theme.cardColor,
       appBar: AppBar(
-        title: const Text("Forgot Password"),
+        title: const Text("SignIn with Phone"),
         centerTitle: true,
       ),
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -53,6 +53,8 @@ class _PhonePageState extends State<PhonePage> {
               ),
               ElevatedButton(
                 onPressed: () async {
+                  
+
                   if (_formKey.currentState!.validate()) {
                     await FirebaseAuth.instance.verifyPhoneNumber(
                       phoneNumber: '+91${phoneController.text.trim()}',
@@ -78,6 +80,27 @@ class _PhonePageState extends State<PhonePage> {
                         // Handle auto-retrieval timeout
                       },
                     );
+                    showDialog(
+                    
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: context.theme.cardColor,
+                        title: const Text("Success"),
+                        content: const Text("OTP Send Successfully"),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              Navigator.of(context)
+                                  .pushNamed('/otpverify'); // Close the dialog
+                            },
+                            child: Text("OK"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                   }
                 },
                 style: ElevatedButton.styleFrom(

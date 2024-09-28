@@ -150,7 +150,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 25,
                 ),
                 // TextButton(
                 //   onPressed: () {
@@ -184,6 +184,22 @@ class _LoginPageState extends State<LoginPage> {
                 //   height: 20,
                 // ),
                 _googleSignInButton(),
+                SizedBox(height: 20),
+                // Text("or"),
+                // SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed("/phoneverification");
+                  },
+                  child: Text(
+                    "Use Phone Number Instead",
+                    style: TextStyle(
+                      color: context.theme.focusColor, // Red color
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

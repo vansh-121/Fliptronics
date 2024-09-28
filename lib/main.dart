@@ -6,6 +6,8 @@ import 'package:flutter_catalogue/core/store.dart';
 import 'package:flutter_catalogue/pages/cart_page.dart';
 import 'package:flutter_catalogue/pages/forget_password.dart';
 import 'package:flutter_catalogue/pages/login_page.dart';
+import 'package:flutter_catalogue/pages/otp_page.dart';
+import 'package:flutter_catalogue/pages/phone_verification.dart';
 import 'package:flutter_catalogue/themes.dart';
 import 'package:flutter_catalogue/utils/routes.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -55,6 +57,8 @@ class MyApp extends StatelessWidget {
         Routes.loginRoute: (context) => LoginPage(),
         Routes.CartRoute: (context) => CartPage(),
         Routes.ForgotRoute: (context) => ForgetPage(),
+        Routes.PhoneRoute: (context) => PhonePage(),
+        Routes.OTPRoute: (context) => OtpPage(verificationid: 'verificationid',),
       },
     );
   }

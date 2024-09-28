@@ -18,7 +18,7 @@ class _ForgetPageState extends State<ForgetPage> {
   TextEditingController emailController = TextEditingController();
   forgotpassword(String email) async {
     if (email == "") {
-      return Text("Please enter your email address");
+      return const Text("Please enter your email address");
     } else {
       FirebaseAuth.instance.sendPasswordResetEmail(email: email);
     }
@@ -71,8 +71,8 @@ class _ForgetPageState extends State<ForgetPage> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text("Success"),
-                          content: Text("Check your gmail"),
+                          title: const Text("Success"),
+                          content: const Text("Check your gmail"),
                           actions: [
                             TextButton(
                               onPressed: () {
@@ -91,6 +91,22 @@ class _ForgetPageState extends State<ForgetPage> {
                     foregroundColor: Colors.white),
                 child: Text(
                   "Confirm",
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed("/phoneverification");
+                },
+                child: Text(
+                  "Use Phone Number Instead",
+                  style: TextStyle(
+                    color: context.theme.hintColor, // Red color
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
               ),
             ],

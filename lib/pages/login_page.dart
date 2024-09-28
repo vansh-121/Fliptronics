@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   bool changebutton = false;
 
   GoogleSignIn googleAuth = GoogleSignIn(
-    serverClientId:
+    clientId:
         '590193531184-ont553hvvvmicu965evaekb7iqefupqv.apps.googleusercontent.com',
   );
 

@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_catalogue/themes.dart';
@@ -62,9 +64,12 @@ class MyDrawer extends StatelessWidget {
         ),
         ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed("/login");
+                  FirebaseAuth.instance.signOut().then((value) {
+                    Navigator.of(context).pushReplacementNamed("/login");
+                  });
                 },
-                style: ElevatedButton.styleFrom(backgroundColor: context.theme.shadowColor),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: context.theme.shadowColor),
                 child: "Sign Out".text.color(Colors.white).make())
             .centered()
             .p64()

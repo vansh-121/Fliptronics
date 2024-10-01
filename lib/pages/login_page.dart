@@ -1,10 +1,12 @@
 import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_catalogue/pages/home_page.dart';
 import 'package:flutter_catalogue/utils/routes.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -19,6 +21,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String name = '';
   bool changebutton = false;
+  final fb = FacebookLogin();
 
   GoogleSignIn googleAuth = GoogleSignIn(
     clientId:
@@ -87,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                             return null;
                           }),
                       const SizedBox(
-                        height: 20,
+                        height: 15,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -108,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                     ],
                   ),
@@ -150,63 +153,31 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 25,
+                  height: 40,
                 ),
+                _googleSignInButton(),
+
+                SizedBox(height: 15),
                 // TextButton(
                 //   onPressed: () {
-                //     googleAuth.signIn().then((result) {
-                //       result?.authentication.then((googleKey) {
-                //         FirebaseAuth.instance
-                //             .signInWithCredential(GoogleAuthProvider.credential(
-                //                 idToken: googleKey.idToken,
-                //                 accessToken: googleKey.accessToken))
-                //             .then((signedInUser) {
-                //           print("Signed in !!");
-                //           Navigator.of(context).pushReplacementNamed("/home");
-                //         }).catchError((e) {
-                //           print(e);
-                //         });
-                //       }).catchError((e) {
-                //         print(e);
-                //       });
-                //     }).catchError((e) {
-                //       print(e);
-                //     });
+                //     Navigator.of(context).pushNamed("/phoneverification");
                 //   },
-                //   child: const Text("Sign in with Google",
-                //       style: TextStyle(
-                //         color: Color.fromARGB(255, 5, 3, 180),
-                //         fontWeight: FontWeight.bold,
-                //         fontSize: 15,
-                //       )),
+                //   child: Text(
+                //     "Use Phone Number Instead",
+                //     style: TextStyle(
+                //       color: context.theme.focusColor,
+                //       fontWeight: FontWeight.bold,
+                //       fontSize: 15,
+                //     ),
+                //   ),
                 // ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
-                _googleSignInButton(),
-                SizedBox(height: 20),
-                // Text("or"),
-                // SizedBox(height: 10),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed("/phoneverification");
-                  },
-                  child: Text(
-                    "Use Phone Number Instead",
-                    style: TextStyle(
-                      color: context.theme.focusColor, // Red color
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
+                _facebookSignInButton(),
               ],
             ),
           ),
         ));
   }
 
-  // Moved this method outside the widget tree
   Widget _googleSignInButton() {
     return Center(
       child: SizedBox(
@@ -236,6 +207,56 @@ class _LoginPageState extends State<LoginPage> {
             }).catchError((e) {
               print(e);
             });
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _facebookSignInButton() {
+    return Center(
+      child: SizedBox(
+        height: 40,
+        child: SignInButton(
+          Buttons.facebook,
+          text: "Sign In with Facebook",
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          onPressed: () async {
+            final result = await fb.logIn(permissions: [
+              FacebookPermission.publicProfile,
+              FacebookPermission.email,
+            ]);
+
+            switch (result.status) {
+              case FacebookLoginStatus.success:
+                final accessToken = result.accessToken;
+                final facebookAuthCredential =
+                    FacebookAuthProvider.credential(accessToken!.token);
+                FirebaseAuth.instance
+                    .signInWithCredential(facebookAuthCredential)
+                    .then((signedInUser) {
+                  print("Signed in with Facebook!!");
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            HomePage()), // Navigate directly to the home screen
+                  );
+                }).catchError((e) {
+                  print(e);
+                });
+                break;
+
+              case FacebookLoginStatus.cancel:
+                print('Login cancelled by the user.');
+                break;
+
+              case FacebookLoginStatus.error:
+                print('Error during login: ${result.error}');
+                break;
+            }
           },
         ),
       ),

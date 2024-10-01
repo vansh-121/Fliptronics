@@ -31,12 +31,12 @@ void main() async {
     await Firebase.initializeApp();
   }
   runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) =>
-          VxState(store: MyStore(), child: MyApp()), // Wrap your app
-    ),
+    // DevicePreview(
+    //   enabled: !kReleaseMode,
+    //   builder: (context) =>
+    VxState(store: MyStore(), child: MyApp()), // Wrap your app
   );
+  // );
 }
 
 class MyApp extends StatelessWidget {
@@ -58,7 +58,9 @@ class MyApp extends StatelessWidget {
         Routes.CartRoute: (context) => CartPage(),
         Routes.ForgotRoute: (context) => ForgetPage(),
         Routes.PhoneRoute: (context) => PhonePage(),
-        Routes.OTPRoute: (context) => OtpPage(verificationid: 'verificationid',),
+        Routes.OTPRoute: (context) => OtpPage(
+              verificationid: 'verificationid',
+            ),
       },
     );
   }

@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_catalogue/themes.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -32,7 +33,10 @@ class MyDrawer extends StatelessWidget {
                 backgroundImage: AssetImage("assets/images/1684992616735.jpeg"),
               )),
         ),
-        const ListTile(
+        ListTile(
+          onTap: () {
+            Navigator.of(context).pushReplacementNamed('/home');
+          },
           leading: Icon(
             CupertinoIcons.home,
           ),
@@ -42,17 +46,36 @@ class MyDrawer extends StatelessWidget {
             textScaler: TextScaler.linear(1.1),
           ),
         ),
-        const ListTile(
+        ListTile(
+          onTap: () {
+            Navigator.of(context).pushNamed('/users');
+          },
           leading: Icon(
-            CupertinoIcons.profile_circled,
+            Icons.supervised_user_circle_sharp,
           ),
           title: Text(
-            "Profile",
+            "Users",
             style: TextStyle(fontWeight: FontWeight.bold),
             textScaler: TextScaler.linear(1.1),
           ),
         ),
-        const ListTile(
+        ListTile(
+          onTap: () async {
+            final Uri emailUri = Uri(
+              scheme: 'mailto',
+              path: 'vansh.sethi98760@gmail.com',
+              queryParameters: {
+                'subject': 'Fliptronics',
+                'body': 'Contact',
+              },
+            );
+
+            if (await canLaunchUrl(emailUri)) {
+              await launchUrl(emailUri);
+            } else {
+              throw 'Could not open email client';
+            }
+          },
           leading: Icon(
             CupertinoIcons.mail,
           ),
@@ -62,7 +85,12 @@ class MyDrawer extends StatelessWidget {
             textScaler: TextScaler.linear(1.1),
           ),
         ),
-        ElevatedButton(
+        Column(
+          children: [
+            SizedBox(height: 35), // Space at the top
+            Align(
+              alignment: Alignment.centerLeft, // Align to the left
+              child: ElevatedButton(
                 onPressed: () {
                   FirebaseAuth.instance.signOut().then((value) {
                     Navigator.of(context).pushReplacementNamed("/login");
@@ -70,9 +98,12 @@ class MyDrawer extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: context.theme.shadowColor),
-                child: "Sign Out".text.color(Colors.white).make())
-            .centered()
-            .p64()
+                child: "Sign Out".text.color(Colors.white).make(),
+              ),
+            ),
+            // Other widgets
+          ],
+        ).px64()
       ]),
     );
   }

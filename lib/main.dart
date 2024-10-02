@@ -8,6 +8,7 @@ import 'package:flutter_catalogue/pages/forget_password.dart';
 import 'package:flutter_catalogue/pages/login_page.dart';
 import 'package:flutter_catalogue/pages/otp_page.dart';
 import 'package:flutter_catalogue/pages/phone_verification.dart';
+import 'package:flutter_catalogue/pages/users_page.dart';
 import 'package:flutter_catalogue/themes.dart';
 import 'package:flutter_catalogue/utils/routes.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -31,12 +32,12 @@ void main() async {
     await Firebase.initializeApp();
   }
   runApp(
-    // DevicePreview(
-    //   enabled: !kReleaseMode,
-    //   builder: (context) =>
-    VxState(store: MyStore(), child: MyApp()), // Wrap your app
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) =>
+          VxState(store: MyStore(), child: MyApp()), // Wrap your app
+    ),
   );
-  // );
 }
 
 class MyApp extends StatelessWidget {
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
         Routes.OTPRoute: (context) => OtpPage(
               verificationid: 'verificationid',
             ),
+        Routes.UsersRoute: (context) => UsersPage(),
       },
     );
   }

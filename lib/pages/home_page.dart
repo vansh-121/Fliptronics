@@ -73,6 +73,7 @@ class _HomePageState extends State<HomePage> {
           style: TextStyle(
               color: context.theme.highlightColor, fontWeight: FontWeight.w600),
         ),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: Container(

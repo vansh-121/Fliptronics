@@ -8,6 +8,7 @@ import 'package:flutter_catalogue/pages/forget_password.dart';
 import 'package:flutter_catalogue/pages/login_page.dart';
 import 'package:flutter_catalogue/pages/otp_page.dart';
 import 'package:flutter_catalogue/pages/phone_verification.dart';
+import 'package:flutter_catalogue/pages/profile_page.dart';
 import 'package:flutter_catalogue/pages/users_page.dart';
 import 'package:flutter_catalogue/themes.dart';
 import 'package:flutter_catalogue/utils/routes.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
               verificationid: 'verificationid',
             ),
         Routes.UsersRoute: (context) => UsersPage(),
+        Routes.ProfileRoute: (context) => ProfilePage(),
       },
     );
   }

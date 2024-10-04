@@ -48,6 +48,19 @@ class MyDrawer extends StatelessWidget {
         ),
         ListTile(
           onTap: () {
+            Navigator.of(context).pushNamed('/profile');
+          },
+          leading: Icon(
+            CupertinoIcons.profile_circled,
+          ),
+          title: Text(
+            "Profile",
+            style: TextStyle(fontWeight: FontWeight.bold),
+            textScaler: TextScaler.linear(1.1),
+          ),
+        ),
+        ListTile(
+          onTap: () {
             Navigator.of(context).pushNamed('/users');
           },
           leading: Icon(

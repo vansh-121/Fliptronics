@@ -7,4 +7,5 @@ class Routes {
   static String PhoneRoute = "/phoneverification";
   static String OTPRoute = "/otpverify";
   static String UsersRoute = "/users";
+  static String ProfileRoute = "/profile";
 }

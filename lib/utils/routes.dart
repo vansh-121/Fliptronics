@@ -8,4 +8,5 @@ class Routes {
   static String OTPRoute = "/otpverify";
   static String UsersRoute = "/users";
   static String ProfileRoute = "/profile";
+  static String SignUpRoute = "/signup";
 }

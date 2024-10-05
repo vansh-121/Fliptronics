@@ -106,6 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.theme.cardColor,
       appBar: AppBar(
         title: Text("Your Profile"),
         centerTitle: true,

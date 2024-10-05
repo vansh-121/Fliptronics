@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_catalogue/core/store.dart';
 import 'package:flutter_catalogue/models/cart.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:upi_india/upi_india.dart';
+import 'package:uuid/uuid.dart';
+
+final Uuid uuid = Uuid();
+String transactionRefId = uuid.v4();
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -22,24 +28,89 @@ class CartPage extends StatelessWidget {
   }
 }
 
-class _CartTotal extends StatelessWidget {
+class _CartTotal extends StatefulWidget {
   const _CartTotal({super.key});
 
   @override
+  State<_CartTotal> createState() => _CartTotalState();
+}
+
+class _CartTotalState extends State<_CartTotal> {
+  late UpiIndia _upiIndia;
+  UpiResponse? _transaction;
+  final CartModel _cart = (VxState.store as MyStore).cart;
+
+  @override
+  void initState() {
+    super.initState();
+    _upiIndia = UpiIndia();
+  }
+
+  Future<void> _startPayment() async {
+    double totalPrice = _cart.totalPrice.toDouble();
+
+    // Check if the amount is within the valid range
+    if (totalPrice < 1 || totalPrice > 100000) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content:
+              "Due to UPI Restrictions !! We can consider payments upto 1 lakh only."
+                  .text
+                  .color(Colors.white)
+                  .make(),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return; // Do not proceed with payment if amount is invalid
+    }
+
+    UpiApp app = UpiApp.googlePay; // Choosing Google Pay
+    _transaction = await _upiIndia.startTransaction(
+      app: app,
+      receiverUpiId: "vansh.sethi98760-1@okicici", // Replace with actual UPI ID
+      receiverName: "Vansh Sethi",
+      transactionRefId: transactionRefId, // A unique transaction ID
+      transactionNote: "Payment for items in the cart",
+      amount: totalPrice,
+    );
+
+    setState(() {
+      // To update the UI after receiving the transaction response
+    });
+
+    _handleTransactionResponse(_transaction!);
+  }
+
+  void _handleTransactionResponse(UpiResponse response) {
+    String message = '';
+    switch (response.status) {
+      case UpiPaymentStatus.SUCCESS:
+        message = "Payment Successful!";
+        break;
+      case UpiPaymentStatus.FAILURE:
+        message = "Payment Failed!";
+        break;
+      case UpiPaymentStatus.SUBMITTED:
+        message = "Payment Submitted!";
+        break;
+      default:
+        message = "Unknown status: ${response.status}";
+    }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: message.text.make(),
+      backgroundColor: Colors.green,
+    ));
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final CartModel _cart = (VxState.store as MyStore).cart;
     return SizedBox(
       height: 200,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           ElevatedButton(
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: "Coming Soon".text.xl.color(Colors.white).make(),
-                backgroundColor: context.theme.shadowColor,
-              ));
-            },
+            onPressed: _startPayment, // Start UPI payment on button tap
             style: ButtonStyle(
               backgroundColor:
                   WidgetStatePropertyAll(context.theme.shadowColor),

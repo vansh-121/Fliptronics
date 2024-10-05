@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
@@ -37,142 +36,166 @@ class _LoginPageState extends State<LoginPage> {
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
-            child: Column(
-              children: [
-                Image.asset(
-                  "assets/images/login.png",
-                  fit: BoxFit.cover,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Welcome $name!",
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 28),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 16.0, horizontal: 32.0),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                          decoration: const InputDecoration(
-                              hintText: "Enter your username",
-                              labelText: "Username"),
-                          onChanged: (value) {
-                            name = value;
-                            setState(() {});
-                          },
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please enter your username";
-                            }
-                            return null;
-                          }),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                              hintText: "Enter your password",
-                              labelText: "Password"),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please enter your password.";
-                            } else if (value.length < 6) {
-                              return "Password length must be greater than 6.";
-                            }
-                            return null;
-                          }),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pushNamed("/forgot");
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Image.asset(
+                    "assets/images/login.png",
+                    fit: BoxFit.cover,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Welcome $name!",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 28),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 32.0),
+                    child: Column(
+                      children: [
+                        TextFormField(
+                            decoration: const InputDecoration(
+                                hintText: "Enter your username",
+                                labelText: "Username"),
+                            onChanged: (value) {
+                              name = value;
+                              setState(() {});
                             },
-                            child: Text(
-                              "Forgot Password ?",
-                              style: TextStyle(
-                                color: context.theme.hintColor, // Red color
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter your username";
+                              }
+                              return null;
+                            }),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        TextFormField(
+                            obscureText: true,
+                            decoration: const InputDecoration(
+                                hintText: "Enter your password",
+                                labelText: "Password"),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter your password.";
+                              } else if (value.length < 6) {
+                                return "Password length must be greater than 6.";
+                              }
+                              return null;
+                            }),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pushNamed("/forgot");
+                              },
+                              child: Text(
+                                "Forgot Password ?",
+                                style: TextStyle(
+                                  color: context.theme.hintColor, // Red color
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Material(
+                    color: const Color.fromARGB(255, 68, 61, 209),
+                    borderRadius: BorderRadius.circular(18),
+                    child: InkWell(
+                      onTap: () async {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            changebutton = true;
+                          });
+                          await Future.delayed(const Duration(seconds: 1));
+                          await Navigator.pushNamed(context, Routes.HomeRoute);
+                          setState(() {
+                            changebutton = false;
+                          });
+                        }
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 500),
+                        width: changebutton ? 50 : 100,
+                        height: 40,
+                        alignment: Alignment.center,
+                        child: changebutton
+                            ? const Icon(
+                                Icons.done,
+                                color: Colors.white,
+                              )
+                            : const Text(
+                                "Login",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                ),
+                              ),
                       ),
-                      const SizedBox(
-                        height: 10,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed("/signup");
+                        },
+                        child: Text(
+                          "New user ? Sign up now!",
+                          style: TextStyle(
+                            color: context.theme.highlightColor, // Red color
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                ),
-                Material(
-                  color: const Color.fromARGB(255, 68, 61, 209),
-                  borderRadius: BorderRadius.circular(18),
-                  child: InkWell(
-                    onTap: () async {
-                      if (_formKey.currentState!.validate()) {
-                        setState(() {
-                          changebutton = true;
-                        });
-                        await Future.delayed(const Duration(seconds: 1));
-                        await Navigator.pushNamed(context, Routes.HomeRoute);
-                        setState(() {
-                          changebutton = false;
-                        });
-                      }
-                    },
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 500),
-                      width: changebutton ? 50 : 100,
-                      height: 40,
-                      alignment: Alignment.center,
-                      child: changebutton
-                          ? const Icon(
-                              Icons.done,
-                              color: Colors.white,
-                            )
-                          : const Text(
-                              "Login",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                              ),
-                            ),
-                    ),
+                  const SizedBox(
+                    height: 10,
                   ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                _googleSignInButton(),
+                  _googleSignInButton(),
 
-                SizedBox(height: 15),
-                // TextButton(
-                //   onPressed: () {
-                //     Navigator.of(context).pushNamed("/phoneverification");
-                //   },
-                //   child: Text(
-                //     "Use Phone Number Instead",
-                //     style: TextStyle(
-                //       color: context.theme.focusColor,
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: 15,
-                //     ),
-                //   ),
-                // ),
-                _facebookSignInButton(),
-              ],
+                  SizedBox(height: 15),
+                  // TextButton(
+                  //   onPressed: () {
+                  //     Navigator.of(context).pushNamed("/phoneverification");
+                  //   },
+                  //   child: Text(
+                  //     "Use Phone Number Instead",
+                  //     style: TextStyle(
+                  //       color: context.theme.focusColor,
+                  //       fontWeight: FontWeight.bold,
+                  //       fontSize: 15,
+                  //     ),
+                  //   ),
+                  // ),
+                  _facebookSignInButton(),
+                ],
+              ),
             ),
           ),
         ));

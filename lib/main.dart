@@ -9,6 +9,7 @@ import 'package:flutter_catalogue/pages/login_page.dart';
 import 'package:flutter_catalogue/pages/otp_page.dart';
 import 'package:flutter_catalogue/pages/phone_verification.dart';
 import 'package:flutter_catalogue/pages/profile_page.dart';
+import 'package:flutter_catalogue/pages/signup_page.dart';
 import 'package:flutter_catalogue/pages/users_page.dart';
 import 'package:flutter_catalogue/themes.dart';
 import 'package:flutter_catalogue/utils/routes.dart';
@@ -65,6 +66,7 @@ class MyApp extends StatelessWidget {
             ),
         Routes.UsersRoute: (context) => UsersPage(),
         Routes.ProfileRoute: (context) => ProfilePage(),
+        Routes.SignUpRoute: (context) => SignUpPage(),
       },
     );
   }

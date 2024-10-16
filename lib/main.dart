@@ -33,13 +33,19 @@ void main() async {
   } else {
     await Firebase.initializeApp();
   }
-  runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) =>
-          VxState(store: MyStore(), child: MyApp()), // Wrap your app
-    ),
-  );
+  if (kIsWeb) {
+    runApp(
+      DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context) =>
+            VxState(store: MyStore(), child: MyApp()), // Wrap your app
+      ),
+    );
+  } else {
+    runApp(
+      VxState(store: MyStore(), child: MyApp()),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {

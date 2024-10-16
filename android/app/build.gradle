@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.example.flutter_catalogue"
-    compileSdk = flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -30,6 +30,7 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         minSdkVersion 23
+        targetSdkVersion flutter.targetSdkVersion
         multiDexEnabled true
     }
 
@@ -50,6 +51,13 @@ dependencies{
     implementation platform('com.google.firebase:firebase-bom:33.3.0')
     implementation("com.google.firebase:firebase-auth")
     implementation 'com.android.support:multidex:1.0.3'
+    configurations.all {
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'org.jetbrains.kotlin') {
+            details.useVersion '2.0.21' // Adjust this to match your desired Kotlin version
+        }
+    }
+}
 }
 
 apply plugin: 'com.google.gms.google-services'

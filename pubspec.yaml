@@ -37,6 +37,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_login_facebook: ^2.0.1
+  flutter_native_splash: ^2.4.1
   go_router: ^14.2.7
   google_fonts: ^6.2.1
   google_sign_in: ^6.2.1
@@ -54,8 +55,7 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
-
-
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.

@@ -1,0 +1,18 @@
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+
+  # Background color for light mode
+  color: "#FFFFFF"  # Light mode background color (white)
+  icon_background_color: "#FFFFFF"
+  # Background color for dark mode
+  color_dark: "#000000"  # Dark mode background color (black or any dark color)
+  icon_background_color_dark: "#000000" 
+  # Android 12 specific configuration
+  android_12:
+    color: "#FFFFFF"  # Light mode background color for Android 12
+    icon_background_color: "#FFFFFF"  # Icon background color for light mode
+    color_dark: "#000000"  # Dark mode background color for Android 12
+    icon_background_color_dark: "#000000"  # Dark mode icon background color
+

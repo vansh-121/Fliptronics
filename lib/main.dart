@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter_catalogue/core/push_notifications.dart';
 import 'package:flutter_catalogue/core/store.dart';
 import 'package:flutter_catalogue/pages/cart_page.dart';
 import 'package:flutter_catalogue/pages/forget_password.dart';
@@ -23,15 +24,17 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(
-      apiKey: "AIzaSyD_sqvHUcufqoTdkZzjwprC8u9Lk0iABRY",
-      authDomain: "windows-38d91.firebaseapp.com",
-      projectId: "windows-38d91",
-      storageBucket: "windows-38d91.appspot.com",
-      messagingSenderId: "590193531184",
-      appId: "1:590193531184:web:68e3331009e195fe43d0f5",
-    ));
+            apiKey: "AIzaSyD_sqvHUcufqoTdkZzjwprC8u9Lk0iABRY",
+            authDomain: "windows-38d91.firebaseapp.com",
+            projectId: "windows-38d91",
+            storageBucket: "windows-38d91.appspot.com",
+            messagingSenderId: "590193531184",
+            appId: "1:590193531184:web:68e3331009e195fe43d0f5",
+            measurementId: "G-X1G4KLLFQ8"));
+    // await PushNotifications().initNotifications();
   } else {
     await Firebase.initializeApp();
+    await PushNotifications().initNotifications();
   }
   if (kIsWeb) {
     runApp(

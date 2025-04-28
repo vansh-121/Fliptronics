@@ -1,7 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_catalogue/core/store.dart';
@@ -50,10 +48,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: context.canvasColor,
       floatingActionButton: VxBuilder(
-        mutations: {AddMutation, RemoveMutation},
+        mutations: const {AddMutation, RemoveMutation},
         builder: (context, MyStore, _) => FloatingActionButton(
           onPressed: () => Navigator.pushNamed(context, Routes.CartRoute),
-          shape: StadiumBorder(),
+          shape: const StadiumBorder(),
           backgroundColor: context.theme.shadowColor,
           child: const Icon(
             CupertinoIcons.bag_fill,

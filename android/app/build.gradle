@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.example.flutter_catalogue"
-    compileSdkVersion 34
+    compileSdkVersion 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

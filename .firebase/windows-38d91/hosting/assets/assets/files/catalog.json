@@ -1,0 +1,65 @@
+
+{
+    "products" : [
+
+        {
+            "name": "iPad Air",
+            "id": 5 ,
+            "desc": "128 GB Storage",
+            "price": 99999,
+            "color": "#33505a",
+            "img":
+                "assets/images/264354_ogcagh.png"
+
+        },
+
+
+        {
+            "name": "iPhone 12 Pro",
+            "id": 4 ,
+            "desc": "A14 Chip",
+            "price": 89999,
+            "color": "#33505a",
+            "img":
+                "assets/images/iphone_12___Purple1657182290iphone-12-purple.webp"
+
+        },
+        
+      
+        {
+            "name": "Apple Watch SE",
+            "id": 3 ,
+            "desc": "Series 7",
+            "price": 49999,
+            "color": "#33505a",
+            "img":
+                "assets/images/watchos-10-series-8-watch-turn-on.png"
+        },
+
+
+
+
+
+        {
+            "name": "AirPods",
+            "id": 2 ,
+            "desc": "5th Generation",
+            "price": 14999,
+            "color": "#33505a",
+            "img":
+                "assets/images/111851_sp880-airpods-Pro-2nd-gen.png"
+
+        }
+
+
+        
+
+        
+
+
+
+
+
+    ]
+
+}

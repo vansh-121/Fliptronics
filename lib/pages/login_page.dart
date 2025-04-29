@@ -8,6 +8,7 @@ import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'dart:math' as math;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -18,9 +19,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   String name = '';
+  String email = '';
+  String password = '';
   bool changebutton = false;
   final fb = FacebookLogin();
-
   GoogleSignIn googleAuth = GoogleSignIn(
     clientId:
         '590193531184-ont553hvvvmicu965evaekb7iqefupqv.apps.googleusercontent.com',
@@ -38,9 +40,15 @@ class _LoginPageState extends State<LoginPage> {
             child: SafeArea(
               child: Column(
                 children: [
-                  Image.asset(
-                    "assets/images/login.png",
-                    fit: BoxFit.cover,
+                  SizedBox(
+                    width:
+                        math.min(MediaQuery.of(context).size.width * 0.6, 350),
+                    child: Image.asset(
+                      Theme.of(context).brightness == Brightness.dark
+                          ? "assets/images/login_dark.png"
+                          : "assets/images/login.png",
+                      fit: BoxFit.contain,
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -60,15 +68,15 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         TextFormField(
                             decoration: const InputDecoration(
-                                hintText: "Enter your username",
-                                labelText: "Username"),
+                                hintText: "Enter your email",
+                                labelText: "Email"),
                             onChanged: (value) {
-                              name = value;
+                              email = value;
                               setState(() {});
                             },
                             validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please enter your username";
+                              if (value!.isEmpty || !value.contains('@')) {
+                                return "Please enter a valid email address";
                               }
                               return null;
                             }),
@@ -80,6 +88,9 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: const InputDecoration(
                                 hintText: "Enter your password",
                                 labelText: "Password"),
+                            onChanged: (value) {
+                              password = value;
+                            },
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "Please enter your password.";
@@ -124,8 +135,32 @@ class _LoginPageState extends State<LoginPage> {
                           setState(() {
                             changebutton = true;
                           });
-                          await Future.delayed(const Duration(seconds: 1));
-                          await Navigator.pushNamed(context, Routes.HomeRoute);
+                          try {
+                            await FirebaseAuth.instance
+                                .signInWithEmailAndPassword(
+                                    email: email, password: password);
+                            await Navigator.pushNamed(
+                                context, Routes.HomeRoute);
+                          } catch (e) {
+                            // Show error dialog
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Login Failed'),
+                                  content: Text(e.toString()),
+                                  actions: [
+                                    TextButton(
+                                      child: const Text('OK'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
                           setState(() {
                             changebutton = false;
                           });

@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
+import 'dart:math' as math;
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -38,11 +39,18 @@ class _SignUpPageState extends State<SignUpPage> {
           child: SafeArea(
             child: Column(
               children: [
-                Image.asset(
-                  "assets/images/signup.png",
-                  fit: BoxFit.cover,
+                SizedBox(
+                  width: math.min(MediaQuery.of(context).size.width * 0.6, 350),
+                  child: Image.asset(
+                    Theme.of(context).brightness == Brightness.dark
+                        ? "assets/images/signup_dark.png"
+                        : "assets/images/signup.png",
+                    fit: BoxFit.contain,
+                  ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(
+                  height: 20,
+                ),
                 Text(
                   "Create Account !",
                   style: const TextStyle(
@@ -153,6 +161,12 @@ class _SignUpPageState extends State<SignUpPage> {
                               email: email,
                               password: password,
                             );
+
+                            // Set display name
+                            User? user = FirebaseAuth.instance.currentUser;
+                            if (user != null) {
+                              await user.updateDisplayName(name);
+                            }
 
                             // Show success dialog
                             showDialog(

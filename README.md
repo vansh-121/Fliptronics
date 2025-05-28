@@ -27,12 +27,14 @@ An E-commerce mobile and web application built using Flutter and Firebase. Flipt
 
 ---
 
-## Video Demo 
+## 🎥 Video Demo
 
-
-https://github.com/user-attachments/assets/26a3207e-50e0-4169-b921-360e43437264
-
-
+<div align="center">
+  <video width="80%" controls>
+    <source src="https://github.com/user-attachments/assets/02c29cb7-f8e9-4760-a722-a938c276638e" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
 
 ---
 

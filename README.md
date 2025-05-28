@@ -36,14 +36,34 @@ https://github.com/user-attachments/assets/26a3207e-50e0-4169-b921-360e43437264
 
 ---
 
-
 ## 📸 Screenshots
 
-| Home Page                    | Product Details              | Cart Page                 |
-|-----------------------------|------------------------------|---------------------------|
-| ![home](assets/screenshots/home.png) | ![product](assets/screenshots/product.png) | ![cart](assets/screenshots/cart.png) | 
+<div align="center">
 
-> 
+<table>
+  <tr>
+    <td align="center"><b>Home</b></td>
+    <td align="center"><b>Product Details</b></td>
+    <td align="center"><b>Cart</b></td>
+  </tr>
+  <tr>
+    <td><img src="assets/screenshots/home.jpg" alt="Home" width="250"/></td>
+    <td><img src="assets/screenshots/detail.jpg" alt="Product Details" width="250"/></td>
+    <td><img src="assets/screenshots/cart.jpg" alt="Cart" width="250"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Login</b></td>
+    <td align="center"><b>Profile</b></td>
+    <td align="center"><b>Current Users</b></td>
+  </tr>
+  <tr>
+    <td><img src="assets/screenshots/login.jpg" alt="Login" width="250"/></td>
+    <td><img src="assets/screenshots/profile_details.jpg" alt="Profile" width="250"/></td>
+    <td><img src="assets/screenshots/users.jpg" alt="History" width="250"/></td>
+  </tr>
+</table>
+
+</div>
 
 ---
 

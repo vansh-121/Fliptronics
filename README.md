@@ -95,3 +95,8 @@ git clone https://github.com/vansh-121/Fliptronics.git
 cd Fliptronics
 flutter pub get
 flutter run
+```
+
+---
+
+#### Made with ❤️ by Vansh
